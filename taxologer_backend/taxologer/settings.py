@@ -67,6 +67,29 @@ TEMPLATES = [
     },
 ]
 
+if os.getenv("DB_NAME"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT", "5432"),
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "taxologer_db",
+            "USER": "root",
+            "PASSWORD": "2002",
+            "HOST": "127.0.0.1",
+            "PORT": "3306",
+        }
+    }
+
 WSGI_APPLICATION = "taxologer.wsgi.application"
 
 STATIC_URL = "/static/"
