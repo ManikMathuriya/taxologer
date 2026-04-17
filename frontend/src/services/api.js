@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const API_BASE_URL = "http://127.0.0.1:8000/api";
-export const MEDIA_BASE_URL = "http://127.0.0.1:8000";
+export const API_BASE_URL = "https://api.taxologer.online/api";
+export const MEDIA_BASE_URL = "https://api.taxologer.online";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,11 +9,9 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
   return config;
 });
 
@@ -25,12 +23,7 @@ api.interceptors.response.use(
       localStorage.removeItem("refresh");
       localStorage.removeItem("role");
       localStorage.removeItem("user");
-
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
-      }
     }
-
     return Promise.reject(error);
   }
 );
