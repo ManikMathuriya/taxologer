@@ -1,49 +1,65 @@
 from django.urls import path
-from .views import (
-    RegisterView,
-    LoginView,
-    PackageListView,
-    CreateITRRequestView,
-    MyITRRequestsView,
-    AllITRRequestsView,
-    UpdateITRStatusView,
-    DocumentUploadView,
-    RequestDocumentsView,
-    PaymentView,
-    chatbot_view,
-    create_payment_order,
-    verify_payment,
-    UserDashboardView,
-    AdminDashboardView,
-    UserProfileView,
-    UpdateProfileView,
-    ChangePasswordView,
-    ForgotPasswordView,
-    ResetPasswordView,
-    VerifyDocumentsView,
-)
-
+from .views import *
 
 urlpatterns = [
-    path("register/", RegisterView.as_view(), name="register"),
-    path("login/", LoginView.as_view(), name="login"),
-    path("packages/", PackageListView.as_view(), name="packages"),
-    path("create-request/", CreateITRRequestView.as_view(), name="create-request"),
-    path("my-itr-requests/", MyITRRequestsView.as_view(), name="my-itr-requests"),
-    path("admin/itr-requests/", AllITRRequestsView.as_view(), name="all-itr-requests"),
-    path("admin/update-status/", UpdateITRStatusView.as_view(), name="update-status"),
-    path("upload-document/", DocumentUploadView.as_view(), name="upload-document"),
-    path("request/<int:request_id>/documents/", RequestDocumentsView.as_view(), name="request-documents"),
-    path("payment/", PaymentView.as_view(), name="payment"),
-    path("create-payment-order/", create_payment_order, name="create-payment-order"),
-    path("verify-payment/", verify_payment, name="verify-payment"),
-    path("dashboard/", UserDashboardView.as_view(), name="user-dashboard"),
-    path("admin/dashboard/", AdminDashboardView.as_view(), name="admin-dashboard"),
-    path("profile/", UserProfileView.as_view(), name="profile"),
-    path("profile/update/", UpdateProfileView.as_view(), name="update-profile"),
-    path("change-password/", ChangePasswordView.as_view(), name="change-password"),
-    path("forgot-password/", ForgotPasswordView.as_view(), name="forgot-password"),
-    path("reset-password/<uid>/<token>/", ResetPasswordView.as_view(), name="reset-password"),
-    path("admin/verify-documents/", VerifyDocumentsView.as_view(), name="verify-documents"),
-    path("chatbot/", chatbot_view, name="chatbot"),
+
+    # =========================
+    # AUTH
+    # =========================
+    path("register/", RegisterView.as_view()),
+    path("login/", LoginView.as_view()),
+
+    # =========================
+    # PACKAGES
+    # =========================
+    path("packages/", PackageListView.as_view()),
+
+    # =========================
+    # ITR REQUESTS
+    # =========================
+    path("create-request/", CreateITRRequestView.as_view()),
+    path("my-itr-requests/", MyITRRequestsView.as_view()),
+
+    # ADMIN
+    path("admin/itr-requests/", AllITRRequestsView.as_view()),
+    path("admin/update-status/", UpdateITRStatusView.as_view()),
+    path("admin/dashboard/", AdminDashboardView.as_view()),
+    path("admin/verify-documents/", VerifyDocumentsView.as_view()),
+
+    # =========================
+    # DOCUMENTS
+    # =========================
+    path("upload-document/", DocumentUploadView.as_view()),
+    path("request/<int:request_id>/documents/", RequestDocumentsView.as_view()),
+
+    # =========================
+    # PAYMENTS
+    # =========================
+    path("payment/", PaymentView.as_view()),
+    path("create-payment-order/", create_payment_order),
+    path("verify-payment/", verify_payment),
+
+    # =========================
+    # DASHBOARD
+    # =========================
+    path("dashboard/", UserDashboardView.as_view()),
+
+    # PARTNER
+    path("partner/dashboard/", PartnerDashboardView.as_view()),
+
+    # =========================
+    # PROFILE
+    # =========================
+    path("profile/", UserProfileView.as_view()),
+    path("profile/update/", UpdateProfileView.as_view()),
+    path("change-password/", ChangePasswordView.as_view()),
+
+    # PASSWORD RESET
+    path("forgot-password/", ForgotPasswordView.as_view()),
+    path("reset-password/<uid>/<token>/", ResetPasswordView.as_view()),
+
+    # =========================
+    # CHATBOT
+    # =========================
+    path("chatbot/", chatbot_view),
 ]

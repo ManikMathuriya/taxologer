@@ -16,21 +16,19 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error?.response?.status === 401) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh");
-      localStorage.removeItem("role");
-      localStorage.removeItem("user");
+  (res) => res,
+  (err) => {
+    if (err?.response?.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
     }
-    return Promise.reject(error);
+    return Promise.reject(err);
   }
 );
 
 export const normalizeFileUrl = (url) => {
   if (!url) return "#";
-  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  if (url.startsWith("http")) return url;
   return `${MEDIA_BASE_URL}${url}`;
 };
 

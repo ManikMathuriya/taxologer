@@ -1,20 +1,35 @@
+import { useEffect } from "react";
+
 export default function WhatsAppButton() {
-  const phone = "919999999999"; // 👉 replace with your number
 
-  const handleClick = () => {
-    const message = encodeURIComponent(
-      "Hi, I need help with tax filing"
-    );
+  useEffect(() => {
+    const el = document.getElementById("wa-btn");
+    if (!el) return;
 
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-  };
+    let offsetX, offsetY;
+
+    el.onmousedown = function (e) {
+      offsetX = e.clientX - el.offsetLeft;
+      offsetY = e.clientY - el.offsetTop;
+
+      document.onmousemove = function (e) {
+        el.style.left = e.clientX - offsetX + "px";
+        el.style.top = e.clientY - offsetY + "px";
+      };
+
+      document.onmouseup = function () {
+        document.onmousemove = null;
+      };
+    };
+  }, []);
 
   return (
     <button
-      onClick={handleClick}
-      className="fixed bottom-5 right-5 bg-green-500 hover:bg-green-600 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2 z-50"
+      id="wa-btn"
+      style={{ position: "fixed", bottom: 80, right: 20 }}
+      className="bg-green-500 text-white px-4 py-3 rounded-full"
     >
-      💬 WhatsApp
+      WhatsApp
     </button>
   );
 }
